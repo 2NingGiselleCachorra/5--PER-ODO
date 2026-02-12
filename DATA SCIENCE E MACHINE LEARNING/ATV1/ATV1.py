@@ -1,4 +1,3 @@
-#Python
 import pandas as pd
 
 dados ={
@@ -20,46 +19,44 @@ dados ={
 }
 
 df = pd.DataFrame(dados)
-print(df)
 
-# Questão 1 Mostre:Quantos alunos existem na base A média, maior e menor nota da turma
-print("============================================")
+while True: 
+    resposta = int(input("================================\nEscolhas umas das opções a seguir:\n [0] - Sair\n [1] - Mostrar quantidade de alunos e médias de notas\n [2] - Lista de aprovação por notas\n [3] - Lista de reprovação do faltas\n [4] - Situação da turma\n [5] - Ordem de notas (crescente)\n"))
+    match resposta:
+        
+        case 0: 
+            print("Saindo. . .")
+            break
+        
+        case 1:
+            print(f"\nChamada:\n {df}\n")
+            
+            quant = df["Aluno"].count()
+            print(f"Quantidade: {quant} alunos")
+            
+            media = df["Nota_Final"].mean().round(2)
+            print(f"Média da turma: {media} pontos")
+            
+            maior = df['Nota_Final'].max()
+            print(f"Maior nota: {maior} pontos")
+            
+            menor = df["Nota_Final"].min()
+            print(f"Menor nota: {menor} pontos")
+        
+        case 2:
+            aprovados = df[df['Nota_Final'] >= 7.0]
+            print(f"\nAprovados\n: {aprovados[['Aluno', 'Nota_Final']]}")
+        
+        case 3: 
+            turistas = df[df['Faltas'] >= 10]
+            print(f"\nReprovados (por falta):\n {turistas[['Aluno', 'Faltas']]}")
+        
+        case 4:
+            df['Situacao'] = 'Reprovado'
+            df.loc[(df['Nota_Final']>= 7.0) & (df['Faltas'] < 10), 'Situacao'] = 'Aprovado'
+            print(f"Aprovação da Turma:\n{df[['Aluno', 'Nota_Final', 'Faltas', 'Situacao']]}")
 
-quant = df['Aluno'].count()
-print(f"Quantidade: {quant} alunos")
-
-media = df['Nota_Final'].mean().round(2)
-print(f"Média da turma: {media} pontos")
-
-maior = df['Nota_Final'].max()
-print(f"Maior nota: {maior} pontos")
-
-menor = df['Nota_Final'].min()
-print(f"Menor nota: {menor} pontos")
-
-
-# Questão 2 Liste apenas os alunos aprovados por nota, considerando: Nota final maior ou igual a 7.0
-print("============================================")
-
-aprovados = df[df['Nota_Final']>= 7.0]
-print(f"Aprovados:\n {aprovados[['Aluno', 'Nota_Final']]}")
-
-
-# Questão 3 Liste os alunos reprovados por falta, considerando: Mais de 10 faltas
-print("============================================")
-turistas= df[df['Faltas'] >= 10]
-print(f"Reprovados (por falta):\n {turistas[['Aluno', 'Faltas']]}")
-
-
-# Questão 4 Crie uma nova coluna chamada Situacao, com a seguinte regra:"Aprovado" → Nota ≥ 7 e Faltas ≤ 10 "Reprovado" → Caso contrário
-print("============================================")
-
-df['Situacao'] = 'Reprovado'
-df.loc[(df['Nota_Final'] >= 7.0) & (df['Faltas'] < 10), 'Situacao'] = 'Aprovado'
-print(f"Aprovação da Turma:\n{df[['Aluno', 'Nota_Final', 'Faltas', 'Situacao']]}")
-
-# Questão 5 (Desafio) Ordene o DataFrame: Da maior para a menor nota
-print("============================================")
-
-crescente = df.sort_values(by='Nota_Final', ascending=False)
-print(f"Ordem de notas:\n {crescente}")
+            
+        case 5:
+            crescente = df.sort_values(by='Nota_Final', ascending=False)
+            print(f"\nOrdem de notas:\n {crescente}")
