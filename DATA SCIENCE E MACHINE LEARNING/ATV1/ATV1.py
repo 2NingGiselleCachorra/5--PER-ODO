@@ -59,4 +59,4 @@ while True:
             
         case 5:
             crescente = df.sort_values(by='Nota_Final', ascending=False)
-            print(f"\nOrdem de notas:\n {crescente}")
+            print(f"\nOrdem de notas:\n {crescente}")   
